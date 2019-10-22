@@ -1,0 +1,24 @@
+###I need all symbols to be extern, otherwise I can't create a dynamic library.
+
+gcc -c *.c 
+
+	# create objects from all desired .c files
+
+gcc -shared -fpic -o resulting_libname.so lib1.o libk.o
+
+	# create resulting library file wich is dynamic
+
+gcc -L dir -lXXX code.c -Xlinker -rpath=YYY
+
+	# -L ???
+	# -lXXX, where XXX is my part of my lib name (for libfactorial.so, XXX = 
+	factorial)
+	# -Xlinker -... means, that what follows is taken as argument for 
+	Xlinker
+	# -rpath=YYY where YYY is a path to libXXX.so location
+
+gcc -o code.out code.c libXXX.so
+
+readelf -d code.out
+nm libXXX.so #lists all extern symbols
+ldd code.out #list of all dependencies (and their sources)
